@@ -1,5 +1,5 @@
 resource "aws_security_group" "nsg1" {
-    vpc_id = data.terraform_remote_state.vpc.outputs.vpc
+    vpc_id = aws_vpc.main.id
     name = var.nsg-name
 
     description = "Necessary inbound rules"

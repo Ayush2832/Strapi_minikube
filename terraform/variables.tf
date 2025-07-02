@@ -20,7 +20,7 @@ variable "key-name" {
 }
 
 variable "key-path" {
-  default = "~/.ssh/id_rsa.pub"
+    
 }
 
 variable "ami" {

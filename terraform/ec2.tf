@@ -40,7 +40,7 @@ resource "aws_key_pair" "deployer" {
 resource "aws_instance" "strapi_ec2" {
   ami                    = var.ami
   instance_type          = var.instance-type
-  subnet_id              = data.terraform_remote_state.vpc.outputs.subnet
+  subnet_id              = aws_subnet.public_subnet_1.id
   vpc_security_group_ids = [aws_security_group.nsg1.id]
   key_name               = aws_key_pair.deployer.key_name
   associate_public_ip_address = true

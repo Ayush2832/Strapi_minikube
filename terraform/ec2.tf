@@ -34,7 +34,7 @@ resource "aws_security_group" "nsg1" {
 
 resource "aws_key_pair" "deployer" {
   key_name   = var.key-name
-  public_key = file(var.key-path)
+  public_key = var.key-path
 }
 
 resource "aws_instance" "strapi_ec2" {

@@ -2,7 +2,7 @@ name: Running strapi on minikube
 
 on:
     push:
-        branches: master
+        branches: developer
 
 
 jobs:

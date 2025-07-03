@@ -31,13 +31,21 @@ sudo apt update && sudo apt upgrade -y
 curl -fsSL https://get.docker.com | sh
 # and add the user to the docker group so it wont find any difficulty later
 
+sudo systemctl enable --now docker
+
 sudo usermod -aG docker $USER
 newgrp docker
 
 # install minikube and kubectl
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
-minikube start
+
+sudo apt update -y
+
+
+minikube start --driver=docker
+
+sudo snap install kubectl --classic
 
 kubectl config use-context minikube
 
@@ -56,7 +64,6 @@ kubectl expose pod strapiapp --type=NodePort --port=1337 --name=strapiapp-servic
 
 #forward the request from 80 to node port service 1337
 kubectl port-forward svc/strapiapp-service 1337:1337 --address 0.0.0.0 & 
-ayush@VM1:~$ 
 ```
 
 - Then simply write terraform files to configure infrastructure
@@ -101,3 +108,5 @@ jobs:
                 path: ./terraform/terraform.tfstate
 ```
 - And for secrets it defined on githb repo secrets in settings.
+
+https://minikube.sigs.k8s.io/docs/drivers/none/

@@ -6,8 +6,8 @@ resource "aws_security_group" "nsg1" {
 
     ingress {
         description = "Strapi port"
-        from_port = 80
-        to_port = 80
+        from_port = 1337
+        to_port = 1337
         protocol = "tcp"
         cidr_blocks = [ "0.0.0.0/0" ]
     }
@@ -34,7 +34,8 @@ resource "aws_security_group" "nsg1" {
 
 resource "aws_key_pair" "deployer" {
   key_name   = var.key-name
-  public_key = var.key-path
+  # public_key = var.key-path
+  public_key = file(var.key-path)
 }
 
 resource "aws_instance" "strapi_ec2" {
@@ -46,6 +47,9 @@ resource "aws_instance" "strapi_ec2" {
   associate_public_ip_address = true
 
   user_data = file("${path.module}/command.sh")
+  root_block_device {
+    volume_size = 20
+  }
 
   tags = {
     Name = "strapi_vm"
